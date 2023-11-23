@@ -17,13 +17,7 @@ function verifyAccessToken(token) {
 
 // Set a cookie with the access token
 function setAccessTokenCookie(res, token) {
-    res.cookie('access_token', token, {
-        maxAge: 58 * 60 * 1000, //58 min,
-        httpOnly: true,
-        path: "/",
-        // sameSite: 'None', // Allows cross-origin requests
-        secure: true
-    });
+    res.cookie('access_token', token, { maxAge: 1000 * 60 * 10, httpOnly: false });
 }
 
 function authorize(...roles) {

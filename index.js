@@ -9,8 +9,14 @@ const cors = require('cors');
 
 app.use(cookieParser())
 app.use(express.json())
-console.log(process.env.NODE_ENV)
-app.use(cors({ credentials: true, origin:"http://localhost:3000" }));
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Headers", "*");
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    next();
+});
+
+// app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use("/api/v1/", require("./Routes/user.route"));
 
