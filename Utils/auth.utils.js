@@ -60,13 +60,11 @@ function normalAuth() {
 
         // const user = decoded.user; // assuming you've added the user object to the token payload
         if (decoded) {
-
             const { exp, iat, ...rest } = decoded
             res.userId = rest.id
             res.user_type_id = rest.user_type_id
             const newToken = generateAccessToken(rest);
             res.access_token = newToken
-            setAccessTokenCookie(res, newToken);
             next()
         } else {
 
