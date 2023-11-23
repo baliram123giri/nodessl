@@ -16,7 +16,7 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use("/api/v1/", require("./Routes/user.route"));
 
