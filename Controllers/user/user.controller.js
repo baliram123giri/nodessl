@@ -26,7 +26,6 @@ const userLogin = async (req, res) => {
             "first_time_login": 0,
         }
         const token = generateAccessToken({ user_type_id: 1, id: 1 })
-        setAccessTokenCookie(res, token);
         delete user.password;
         res.status(200).json({ data: user, access_token: token })
 

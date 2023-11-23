@@ -41,7 +41,6 @@ function authorize(...roles) {
         res.user_type_id = rest.user_type_id
         const newToken = generateAccessToken(rest);
         res.access_token = newToken
-        setAccessTokenCookie(res, newToken);
 
         if (!roles.includes(rest.user_type_id)) {
             res.status(401).json(`${rest.user_type_id} user dosn't have the permission!!`);
