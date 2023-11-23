@@ -19,12 +19,8 @@ function verifyAccessToken(token) {
 function setAccessTokenCookie(res, token) {
     res.cookie('access_token', token, {
         maxAge: 58 * 60 * 1000, //58 min,
-        httpOnly: true, // Make the cookie accessible only through the server-side
-        // secure: true,   // Requires HTTPS
         sameSite: 'None', // Allows cross-origin requests
-        secure: true,
-        path: "/",
-        domain: ".onrender.com"
+        secure: true
     });
 }
 
