@@ -54,7 +54,7 @@ function normalAuth() {
 
     // Refresh the access token cookie
     return function refreshAccessToken(req, res, next) {
-        const token = req.cookies["access_token"];
+        const token = req.headers.authorization.split(" ")[1];
         console.log(token, "request token")
         const decoded = verifyAccessToken(token);
         console.log("reuested decoded", decoded)
