@@ -40,6 +40,7 @@ function authorize(...roles) {
         res.userId = rest.id
         res.user_type_id = rest.user_type_id
         const newToken = generateAccessToken(rest);
+        res.access_token = newToken
         setAccessTokenCookie(res, newToken);
 
         if (!roles.includes(rest.user_type_id)) {
@@ -65,6 +66,7 @@ function normalAuth() {
             res.userId = rest.id
             res.user_type_id = rest.user_type_id
             const newToken = generateAccessToken(rest);
+            res.access_token = newToken
             setAccessTokenCookie(res, newToken);
             next()
         } else {

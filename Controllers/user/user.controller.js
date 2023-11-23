@@ -28,7 +28,7 @@ const userLogin = async (req, res) => {
         const token = generateAccessToken({ user_type_id: 1, id: 1 })
         setAccessTokenCookie(res, token);
         delete user.password;
-        res.status(200).json(user)
+        res.status(200).json({ data: user, access_token: token })
 
         // const [[user]] = await db.query(`SELECT id, user_type_id, first_name, last_name, first_time_login, profile_pic, password FROM users WHERE email='${req.body.email}'`)
 
@@ -79,7 +79,7 @@ const userDetails = async (req, res) => {
 
         }
 
-        res.status(200).json({ ...user_results, profile_pic: user_results.profile_pic ? new Buffer.from(user_results.profile_pic, 'binary').toString('base64') : "" })
+        res.status(200).json({ data: { ...user_results, profile_pic: user_results.profile_pic ? new Buffer.from(user_results.profile_pic, 'binary').toString('base64') : "" }, access_token: res.access_token })
 
     } catch (error) {
 
