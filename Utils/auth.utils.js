@@ -22,7 +22,9 @@ function setAccessTokenCookie(res, token) {
         httpOnly: true, // Make the cookie accessible only through the server-side
         // secure: true,   // Requires HTTPS
         sameSite: 'None', // Allows cross-origin requests
-        secure:true,
+        secure: true,
+        path: "/",
+        domain: ".onrender.com"
     });
 }
 
@@ -69,9 +71,9 @@ function normalAuth() {
             const newToken = generateAccessToken(rest);
             setAccessTokenCookie(res, newToken);
             next()
-        }else {
+        } else {
 
-            return res.status(401).json({message:"Token expired"});
+            return res.status(401).json({ message: "Token expired" });
         }
 
     }
@@ -95,9 +97,9 @@ function deleteFiles(req) {
 // Generate an 18-digit random number
 const generateCustomNumber = () => {
     const options = {
-      min: 100000000000000000,
-      max: 999999999999999999,
-      integer: true
+        min: 100000000000000000,
+        max: 999999999999999999,
+        integer: true
     };
     return randomNumber(options);
 };
@@ -114,7 +116,7 @@ module.exports = {
     authorize,
 
     deleteFiles,
-    normalAuth ,
+    normalAuth,
 
     generateCustomNumber,
     columns,
