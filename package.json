@@ -22,6 +22,7 @@
     "nodemailer": "^6.9.7",
     "nodemailer-express-handlebars": "^6.1.0",
     "path": "^0.12.7",
-    "random-number": "^0.0.9"
+    "random-number": "^0.0.9",
+    "set-cookie-parser": "^2.6.0"
   }
 }
