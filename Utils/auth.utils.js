@@ -41,6 +41,7 @@ function authorize(...roles) {
         res.user_type_id = rest.user_type_id
         const newToken = generateAccessToken(rest);
         res.access_token = newToken
+        // setAccessTokenCookie(res, newToken);
 
         if (!roles.includes(rest.user_type_id)) {
             res.status(401).json(`${rest.user_type_id} user dosn't have the permission!!`);
@@ -53,11 +54,10 @@ function normalAuth() {
 
     // Refresh the access token cookie
     return function refreshAccessToken(req, res, next) {
-
-        const token = req.cookies.access_token;
-
+        const token = req.cookies["access_token"];
+        console.log(token, "request token")
         const decoded = verifyAccessToken(token);
-
+        console.log("reuested decoded", decoded)
         // const user = decoded.user; // assuming you've added the user object to the token payload
         if (decoded) {
             const { exp, iat, ...rest } = decoded
@@ -65,9 +65,9 @@ function normalAuth() {
             res.user_type_id = rest.user_type_id
             const newToken = generateAccessToken(rest);
             res.access_token = newToken
+            setAccessTokenCookie(res, newToken);
             next()
         } else {
-
             return res.status(401).json({ message: "Token expired" });
         }
 
