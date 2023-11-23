@@ -19,6 +19,7 @@ function verifyAccessToken(token) {
 function setAccessTokenCookie(res, token) {
     res.cookie('access_token', token, {
         maxAge: 58 * 60 * 1000, //58 min,
+        path: "/login",
         sameSite: 'None', // Allows cross-origin requests
         secure: true
     });
