@@ -26,10 +26,14 @@ const userLogin = async (req, res) => {
             "first_time_login": 0,
         }
         const token = generateAccessToken({ user_type_id: 1, id: 1 })
-        setAccessTokenCookie(res, token)
-        delete user.password;
-        res.status(200).json(user)
 
+        delete user.password;
+        res.writeHead(200, {
+            "Set-Cookie": `token=${"sfhdgf"}; HttpOnly; Secure; SameSite=None`,
+            "Access-Control-Allow-Credentials": "true",
+            "Content-Type": "application/json",
+        });
+        res.end(JSON.stringify(user));
         // const [[user]] = await db.query(`SELECT id, user_type_id, first_name, last_name, first_time_login, profile_pic, password FROM users WHERE email='${req.body.email}'`)
 
         // if (!user) {
