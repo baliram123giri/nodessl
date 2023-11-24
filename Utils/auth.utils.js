@@ -22,6 +22,7 @@ function setAccessTokenCookie(res, token) {
         httpOnly: true, // Make the cookie accessible only through the server-side
         sameSite: 'none', // Allows cross-origin requests
         secure: true,
+        signed: true
     });
 }
 
