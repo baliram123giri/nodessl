@@ -29,7 +29,7 @@ const userLogin = async (req, res) => {
 
         delete user.password;
         res.writeHead(200, {
-            "Set-Cookie": `token=${"sfhdgf"}; HttpOnly; Secure; SameSite=None`,
+            "Set-Cookie": `token=${"sfhdgf"}; HttpOnly; Secure; SameSite=None; Partitioned`,
             "Access-Control-Allow-Credentials": "true",
             "Content-Type": "application/json",
         });
