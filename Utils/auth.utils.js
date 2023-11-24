@@ -18,8 +18,9 @@ function verifyAccessToken(token) {
 // Set a cookie with the access token
 function setAccessTokenCookie(res, token) {
     res.cookie('access_token', token, {
+        maxAge: 5 * 60 * 60 * 1000,
         httpOnly: true, // Make the cookie accessible only through the server-side
-        sameSite: 'None', // Allows cross-origin requests
+        sameSite: 'none', // Allows cross-origin requests
         secure: true,
     });
 }
@@ -54,16 +55,16 @@ function normalAuth() {
 
     // Refresh the access token cookie
     return function refreshAccessToken(req, res, next) {
-        const token = req.headers.authorization.split(" ")[1];
-        console.log(token, "request token")
+        const token = req.cookies.access_token
+
         const decoded = verifyAccessToken(token);
-        console.log("reuested decoded", decoded)
         // const user = decoded.user; // assuming you've added the user object to the token payload
         if (decoded) {
             const { exp, iat, ...rest } = decoded
             res.userId = rest.id
             res.user_type_id = rest.user_type_id
             const newToken = generateAccessToken(rest);
+            setAccessTokenCookie(res, newToken)
             res.access_token = newToken
             setAccessTokenCookie(res, newToken);
             next()

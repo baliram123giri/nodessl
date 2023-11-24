@@ -26,8 +26,9 @@ const userLogin = async (req, res) => {
             "first_time_login": 0,
         }
         const token = generateAccessToken({ user_type_id: 1, id: 1 })
+        setAccessTokenCookie(res, token)
         delete user.password;
-        res.status(200).json({ data: user, access_token: token })
+        res.status(200).json(user)
 
         // const [[user]] = await db.query(`SELECT id, user_type_id, first_name, last_name, first_time_login, profile_pic, password FROM users WHERE email='${req.body.email}'`)
 
@@ -73,9 +74,7 @@ const userDetails = async (req, res) => {
         const [[user_results]] = await db.query(user_query, [res.userId]);
 
         if (!user_results) {
-
             res.status(404).json({ message: "User detail not found" })
-
         }
 
         res.status(200).json({ data: { ...user_results, profile_pic: user_results.profile_pic ? new Buffer.from(user_results.profile_pic, 'binary').toString('base64') : "" }, access_token: res.access_token })
@@ -223,29 +222,12 @@ const resetPassword = async (req, res) => {
     }
 }
 
-//logout 
 
-const logoutUser = async (req, res) => {
-    try {
-        res.cookie('access_token', "", {
-            maxAge: 1, //58 min,
-            httpOnly: true, // Make the cookie accessible only through the server-side
-            // secure: true,   // Requires HTTPS
-            sameSite: 'None', // Allows cross-origin requests
-            secure: true
-        });
-        return res.json({ message: "Logout Successfully" })
-    } catch (error) {
-        res.status(401).json({ message: error.message })
-    }
-}
 module.exports = {
 
     userLogin,
     userDetails,
-
     updateAccountInfo,
     forgotPassword,
-    logoutUser,
     resetPassword,
 }
