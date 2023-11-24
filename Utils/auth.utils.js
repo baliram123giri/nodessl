@@ -19,7 +19,8 @@ function verifyAccessToken(token) {
 function setAccessTokenCookie(res, token) {
     res.cookie('access_token', token, {
         maxAge: 5 * 60 * 60 * 1000,
-        httpOnly: true, // Make the cookie accessible only through the server-side
+        httpOnly: true, // Make the cookie accessible only through the server-side,
+        sameSite: "Lax"
     });
 }
 
